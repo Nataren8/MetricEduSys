@@ -6,12 +6,13 @@ a profundidad*/
 using namespace std;
 
 int main(){
+
     
 int opcion = 0;
 
 
 do
-{
+{ 
 
     cout<<endl;
     cout<<"---------------------------------------------------------"<<endl;
@@ -30,6 +31,7 @@ do
     cout<<endl;
 
     cin>>opcion;
+
 
     /*para cada caso, le utilizaremos para las diferentes funciones, se puede editar
     en caso de que existan mas funciones.*/
@@ -80,6 +82,13 @@ do
 
     } 
 
+    if (opcion > 9)
+    {
+        cout<<endl;
+        cout<<"Ingresa una opcion valida..."<<endl;
+        cout<<endl;
+    }
+    
 } while (opcion != 9 );
     
     return 0;
