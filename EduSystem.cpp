@@ -3,6 +3,9 @@
 /*Ricardo y camilo, les dejare comentarios para que logren entender
 a profundidad*/
 
+/*v1/
+
+
 using namespace std;
 
 int main(){
