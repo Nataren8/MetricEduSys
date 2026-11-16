@@ -1,9 +1,27 @@
 #include <iostream>
-
-/*Ricardo y camilo, les dejare comentarios para que logren entender
-a profundidad*/
+#include <fstream>
 
 using namespace std;
+
+/*Ricardo y camilo, les dejare comentarios para que logren entender a profundidad*/
+
+void mostrarMenu()
+{
+    cout << "---------------------------------------------------------" << endl;
+    cout << "¡Bienvenido a MetricEduSystem!" << endl;
+    cout << "Ingresa el numero de opcion que necesitas realizar" << endl;
+    cout << "(1) Registrar Estudiante" << endl;
+    cout << "(2) Visualizar Cuadro de honor " << endl;
+    cout << "(3) Visualizar Estadisticas " << endl;
+    cout << "(4) Visualizar Cuadro de honor " << endl;
+    cout << "(5) Visualizar promedio de clases" << endl;
+    cout << "(6) Visualizar metricas de estudiantes aprobados y reprobados " << endl;
+    cout << "(7) Visualizar notas maximas y minimas registradas en el curso" << endl;
+    cout << "(8) Visualizar datos individuales de cada estudiante " << endl;
+    cout << "(9) Salir del sistema " << endl;
+    cout << "---------------------------------------------------------" << endl;
+    cout << endl;
+}
 
 int main()
 {
@@ -16,37 +34,18 @@ int main()
 
     do
     {
-
-        cout << endl;
-        cout << "---------------------------------------------------------" << endl;
-        cout << "¡Bienvenido a MetricEduSystem!" << endl;
-        cout << "Ingresa el numero de opcion que necesitas realizar" << endl;
-        cout << "(1) Registrar Estudiante" << endl;
-        cout << "(2) Visualizar Cuadro de honor " << endl;
-        cout << "(3) Visualizar Estadisticas " << endl;
-        cout << "(4) Visualizar Cuadro de honor " << endl;
-        cout << "(5) Visualizar promedio de clases" << endl;
-        cout << "(6) Visualizar metricas de estudiantes aprobados y reprobados " << endl;
-        cout << "(7) Visualizar notas maximas y minimas registradas en el curso" << endl;
-        cout << "(8) Visualizar datos individuales de cada estudiante " << endl;
-        cout << "(9) Salir del sistema " << endl;
-        cout << "---------------------------------------------------------" << endl;
-        cout << endl;
-
+        mostrarMenu();
         cin >> opcion;
-
         /*para cada caso, le utilizaremos para las diferentes funciones, se puede editar
         en caso de que existan mas funciones.*/
         switch (opcion)
         {
         case 1:
             /*Funcion registro de estudiantes*/
-            cout << "Trabajando en ello..." << endl;
+
             break;
 
         case 2:
-            cout << "Trabajando en ello..." << endl;
-
             /*Funcion cuadro de honor*/
 
             break;
@@ -54,12 +53,21 @@ int main()
         case 3:
             for (int i = 0; i < num_notas; i++)
             {
-                cout << "Registre la nota: " << i + 1 << endl;
-                cin >> notas[i];
+                do
+                {
+                    cout << "Registre la nota " << i + 1 << ": ";
+                    cin >> notas[i];
+
+                    if (notas[i] > 10 or notas[i] < 0)
+                    {
+                        cout << "Ingrese una nota valida (entre 0 y 10)" << endl;
+                    }
+
+                } while (notas[i] > 10 or notas[i] < 0);
+
                 sumatoria_notas += notas[i];
             }
             cout << "El promedio total de notas es: " << sumatoria_notas / num_notas << endl;
-            /*Funcion de estadisticas*/
             break;
 
         case 4:
