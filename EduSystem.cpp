@@ -1,11 +1,12 @@
 #include <iostream>
 
+using namespace std;
+
 /*Ricardo y camilo, les dejare comentarios para que logren entender
 a profundidad*/
 
 void mostrarMenu()
 {
-    cout << endl;
     cout << "---------------------------------------------------------" << endl;
     cout << "¡Bienvenido a MetricEduSystem!" << endl;
     cout << "Ingresa el numero de opcion que necesitas realizar" << endl;
@@ -22,8 +23,6 @@ void mostrarMenu()
     cout << endl;
 }
 
-using namespace std;
-
 int main()
 {
 
@@ -33,7 +32,6 @@ int main()
     {
         mostrarMenu();
         cin >> opcion;
-
         /*para cada caso, le utilizaremos para las diferentes funciones, se puede editar
         en caso de que existan mas funciones.*/
         switch (opcion)
