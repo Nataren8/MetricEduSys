@@ -3,7 +3,7 @@
 using namespace std;
 
 /*Ricardo y camilo, les dejare comentarios para que logren entender
-a profundidad*/
+a profundidad   */
 
 struct Estudiante
 {
