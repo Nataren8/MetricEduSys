@@ -5,6 +5,17 @@ using namespace std;
 /*Ricardo y camilo, les dejare comentarios para que logren entender
 a profundidad*/
 
+struct Estudiante
+{
+    string nombres;
+    string apellidos;  
+    string curso;  
+    string identificador;
+    float nota1;
+    float nota2;
+    float nota3;
+};
+
 void mostrarMenu()
 {
     cout << "---------------------------------------------------------" << endl;
@@ -23,8 +34,60 @@ void mostrarMenu()
     cout << endl;
 }
 
+//esta funcion es para el registro de estudiantes lo separare con la inscripcion de las notas por que no tiene mucho sentido ingresar notas
+//si solo se ingresa al estudiante, por eso cree un contador de cantidad de estudiantes para despues crear el de las notas y no perder las posicion que toma en el arreglo.
+int registrarEstudiante(Estudiante estudiantes[], int cantidadEstudiantes)
+{
+    int regopcion = 0;  
+    
+   do{
+        //la insercion de datos en el struct, la tome con do while en vez de un for ya que, para que su funcionalidad fuera mejor, le preguntaba si necesita ingresar mas de una
+        //estudiante o puede regresar al menu y hacerlo despues y no arruina el contador ya que lo guarda en variable.
+        //en los getline tuve que agregar el ws por que al elegir una opcion del menu dejaba un salto de linea que no me dejaba escribir
+        //los datos de los estudiantes.
+
+            cout << "\nIngrese los datos del estudiante: "<<endl;
+
+            cout << "\nIngrese el nombre del estudiante: ";
+            getline(cin >> ws, estudiantes[cantidadEstudiantes].nombres);
+
+            cout << "\nIngrese los apellidos del estudiante: ";
+            getline(cin >> ws, estudiantes[cantidadEstudiantes].apellidos);
+
+            cout << "\nIngrese el nombre del curso del estudiante: ";
+            getline(cin >> ws, estudiantes[cantidadEstudiantes].curso);
+
+            cout << "\nIngrese el codigo del estudiante: ";
+            cin>>estudiantes[cantidadEstudiantes].identificador;
+
+            cantidadEstudiantes = cantidadEstudiantes + 1;
+        //cada que termina un ingreso de un estudiante el contador guarda a 1 estudiante mas dentro de su variable.
+
+        cout<<"\nSi desea realizar el ingreso de otro estudiante presione (1), si desea volver al menu principal presione (0)"<<endl;
+        cin>>regopcion;
+
+        if (regopcion < 0 || regopcion > 1)
+        {
+            cout << "\nIngreso incorrecto, se le redirigiendo hacia el menu......."<<endl;
+            regopcion = 0;
+        }
+        
+
+
+    } while(regopcion != 0);
+
+
+    return cantidadEstudiantes; //aqui retorno el valor de la cantidad de estudiantes para poder crear la siguiente funcion que sera de notas
+
+}
+
+
+
+
 int main()
 {
+    Estudiante estudiantes[200];//Esto solo es un valor quemado para la cantidad de estudiantes que podemos meter en la plataforma.
+    int CantidadEstudiantes = 0;
 
     int opcion = 0;
 
@@ -37,12 +100,32 @@ int main()
         switch (opcion)
         {
         case 1:
-            /*Funcion registro de estudiantes*/
+            //
+            CantidadEstudiantes = registrarEstudiante(estudiantes, CantidadEstudiantes);
+            /*esto nada mas lo cree para que puedan ver si de verdad guardaba la cantidad y no tiraba error*/
+            cout << "\ncantidad de estudiantes:  "<< CantidadEstudiantes<<endl;
+
+            //Esto lo cree para poder observar si, podia mostrarlos los estudiantes o si tenia error, despues lo metemos en funcion xd.
+            cout<<"\nEstudiantes registrados: "<<endl;
+
+
+            for(int i = 0; i < CantidadEstudiantes; i++){
+
+            cout<<"\nEstudiante "<<"("<<i + 1<<")"<<endl;
+            cout << "\nNombre del estudiante: "<<estudiantes[i].nombres;
+            cout << "\nApellidos del estudiante: "<<estudiantes[i].apellidos;
+            cout << "\nNombre del curso del estudiante: "<<estudiantes[i].curso;
+            cout << "\nCodigo del estudiante: "<<estudiantes[i].identificador<<endl;
+            cout<< endl;
+            }
+
 
             break;
 
         case 2:
-            /*Funcion cuadro de honor*/
+            
+            /*cuadro de honor */
+
 
             break;
 
@@ -80,7 +163,7 @@ int main()
             break;
         }
 
-        if (opcion > 9)
+        if (opcion > 9 || opcion < 1 )
         {
             cout << endl;
             cout << "Ingresa una opcion valida..." << endl;
