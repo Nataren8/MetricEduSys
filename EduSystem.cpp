@@ -53,14 +53,16 @@ void registrarEstudiante(Estudiante &e)
             cin >> e.notas[i];
             if (e.notas[i] < 0 or e.notas[i] > 10)
             {
-                cout << "ERROR. Ingrese un dato valido..." << endl;
+                cout << "ERROR! Ingrese un dato valido..." << endl;
             }
             else
             {
-                cout << "Nota registrada correctamente..." << endl;
+                cout << "Dato ingresado correctamente..." << endl;
             }
         } while (e.notas[i] < 0 or e.notas[i] > 10);
     }
+
+    cout << "Todas los datos se han registrado correctamente" << endl;
 }
 
 /*Funcion para guardar los datos del estudiante en un archivo .txt*/
@@ -69,11 +71,12 @@ void guardarEstudiante(Estudiante e)
 {
     ofstream archivo("estudiante.txt", ios::app);
 
-    archivo << e.carnet << " " ;
-    archivo << e.nombre << " " ;
+    archivo << e.carnet << " ";
+    archivo << e.nombre << " ";
     archivo << e.apellido << " ";
 
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++)
+    {
         archivo << " " << e.notas[i];
     }
 
@@ -81,15 +84,52 @@ void guardarEstudiante(Estudiante e)
     archivo.close();
 }
 
+int contarEvaluaciones()
+{
+    ifstream archivo("estudiante.txt");
+    string linea;
+    int contador = 0;
+
+    while (getline(archivo, linea))
+    {
+        contador += 3;
+    }
+    archivo.close();
+    return contador;
+}
+
+float promedioEvaluaciones()
+{
+    ifstream archivo("estudiante.txt");
+    Estudiante e;
+    float suma = 0;
+    int cantidad = 0;
+
+    while (archivo >> e.carnet >> e.nombre >> e.apellido)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            archivo >> e.notas[i];
+            suma += e.notas[i];
+            cantidad++;
+        }
+    }
+    
+    archivo.close();
+
+    if (cantidad == 0)
+    {
+        return 0;
+    }
+
+    return suma / cantidad;
+}
 int main()
 {
-    /*Variables de prueba para probar el sistema de promedios al registrar tres notas*/
-    const int num_notas = 3; /*Vamos a probar registrando 3 notas*/
-    float notas[num_notas];
-    float sumatoria_notas;
-    //Variable para llamar el void Registrar Estudiante
+    // Variable para llamar el void Registrar Estudiante
     Estudiante alumno;
     int opcion = 0;
+    int evaluaciones;
 
     do
     {
@@ -101,8 +141,8 @@ int main()
         {
         case 1:
             /*Funcion registro de estudiantes*/
-            registrarEstudiante (alumno);
-            guardarEstudiante (alumno);
+            registrarEstudiante(alumno);
+            guardarEstudiante(alumno);
             break;
 
         case 2:
@@ -111,26 +151,14 @@ int main()
             break;
 
         case 3:
-            for (int i = 0; i < num_notas; i++)
-            {
-                do
-                {
-                    cout << "Registre la nota " << i + 1 << ": ";
-                    cin >> notas[i];
-
-                    if (notas[i] > 10 or notas[i] < 0)
-                    {
-                        cout << "ERROR: Ingrese una nota valida (entre 0 y 10)" << endl;
-                    }
-
-                } while (notas[i] > 10 or notas[i] < 0);
-
-                sumatoria_notas += notas[i];
-            }
-            cout << "El promedio total de notas es: " << sumatoria_notas / num_notas << endl;
+            /*Funcion de Estadistica-Evaluaciones registradas*/
+            evaluaciones = contarEvaluaciones();
+            cout << "El total de evaluaciones registradas es: " << evaluaciones << endl;
+            cout << "El promedio general es de: " << promedioEvaluaciones() << endl;
             break;
 
         case 4:
+            /*Funcion del cuadro de honor*/
             cout << "Trabajando en ello..." << endl;
             break;
 
