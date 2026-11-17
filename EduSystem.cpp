@@ -4,7 +4,13 @@
 
 using namespace std;
 
-/*Ricardo y camilo, les dejare comentarios para que logren entender a profundidad*/
+struct Estudiante
+{
+    int carnet;
+    string nombre;
+    string apellido;
+    float notas[3];
+};
 
 void mostrarMenu()
 {
@@ -23,16 +29,6 @@ void mostrarMenu()
     cout << "---------------------------------------------------------" << endl;
     cout << endl;
 }
-
-/*Acá se agrega un struct para registrar al estudiante*/
-
-struct Estudiante
-{
-    int carnet;
-    string nombre;
-    string apellido;
-    float notas[3];
-};
 
 /*Funcion para guardar los datos del estudiante*/
 
