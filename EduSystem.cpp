@@ -126,8 +126,7 @@ float promedioEvaluaciones()
 }
 int main()
 {
-    // Variable para llamar el void Registrar Estudiante
-    Estudiante alumno;
+    Estudiante alumno; // Variable para llamar el void Registrar Estudiante
     int opcion = 0;
     int evaluaciones;
 
