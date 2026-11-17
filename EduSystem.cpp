@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -23,13 +24,71 @@ void mostrarMenu()
     cout << endl;
 }
 
+/*Acá se agrega un struct para registrar al estudiante*/
+
+struct Estudiante
+{
+    int carnet;
+    string nombre;
+    string apellido;
+    float notas[3];
+};
+
+/*Funcion para guardar los datos del estudiante*/
+
+void registrarEstudiante(Estudiante &e)
+{
+    cout << "Ingresa el carnet: " << endl;
+    cin >> e.carnet;
+    cout << "Ingresa el nombre: " << endl;
+    cin >> e.nombre;
+    cout << "Ingresa el apellido: " << endl;
+    cin >> e.apellido;
+    /*Bucle for para pedir notas y validar que estén entre 0 y 10*/
+    for (int i = 0; i < 3; i++)
+    {
+        do
+        {
+            cout << "Ingrese la nota del registro " << i + 1 << endl;
+            cin >> e.notas[i];
+            if (e.notas[i] < 0 or e.notas[i] > 10)
+            {
+                cout << "ERROR. Ingrese un dato valido..." << endl;
+            }
+            else
+            {
+                cout << "Nota registrada correctamente..." << endl;
+            }
+        } while (e.notas[i] < 0 or e.notas[i] > 10);
+    }
+}
+
+/*Funcion para guardar los datos del estudiante en un archivo .txt*/
+
+void guardarEstudiante(Estudiante e)
+{
+    ofstream archivo("estudiante.txt", ios::app);
+
+    archivo << e.carnet << " " ;
+    archivo << e.nombre << " " ;
+    archivo << e.apellido << " ";
+
+    for (int i = 0; i < 3; i++){
+        archivo << " " << e.notas[i];
+    }
+
+    archivo << endl;
+    archivo.close();
+}
+
 int main()
 {
-
-    /*Ricardo: Voy a agregar unas variables para empezar a probar las estadísticas */
+    /*Variables de prueba para probar el sistema de promedios al registrar tres notas*/
     const int num_notas = 3; /*Vamos a probar registrando 3 notas*/
     float notas[num_notas];
     float sumatoria_notas;
+    //Variable para llamar el void Registrar Estudiante
+    Estudiante alumno;
     int opcion = 0;
 
     do
@@ -42,12 +101,13 @@ int main()
         {
         case 1:
             /*Funcion registro de estudiantes*/
-
+            registrarEstudiante (alumno);
+            guardarEstudiante (alumno);
             break;
 
         case 2:
             /*Funcion cuadro de honor*/
-
+            cout << "Trabajando en ello..." << endl;
             break;
 
         case 3:
@@ -60,7 +120,7 @@ int main()
 
                     if (notas[i] > 10 or notas[i] < 0)
                     {
-                        cout << "Ingrese una nota valida (entre 0 y 10)" << endl;
+                        cout << "ERROR: Ingrese una nota valida (entre 0 y 10)" << endl;
                     }
 
                 } while (notas[i] > 10 or notas[i] < 0);
