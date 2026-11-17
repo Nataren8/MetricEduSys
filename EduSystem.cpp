@@ -11,9 +11,9 @@ struct Estudiante
     string apellidos;  
     string curso;  
     string identificador;
-    float nota1;
-    float nota2;
-    float nota3;
+    float nota1 = 0;
+    float nota2 = 0;
+    float nota3 = 0;
 };
 
 void mostrarMenu()
@@ -22,14 +22,15 @@ void mostrarMenu()
     cout << "¡Bienvenido a MetricEduSystem!" << endl;
     cout << "Ingresa el numero de opcion que necesitas realizar" << endl;
     cout << "(1) Registrar Estudiante" << endl;
-    cout << "(2) Visualizar Cuadro de honor " << endl;
-    cout << "(3) Visualizar Estadisticas " << endl;
-    cout << "(4) Visualizar Cuadro de honor " << endl;
-    cout << "(5) Visualizar promedio de clases" << endl;
-    cout << "(6) Visualizar metricas de estudiantes aprobados y reprobados " << endl;
-    cout << "(7) Visualizar notas maximas y minimas registradas en el curso" << endl;
-    cout << "(8) Visualizar datos individuales de cada estudiante " << endl;
-    cout << "(9) Salir del sistema " << endl;
+    cout << "(2) Editar notas de estudiantes " << endl;
+    cout << "(3) Visualizar Cuadro de honor " << endl;
+    cout << "(4) Visualizar Estadisticas " << endl;
+    cout << "(5) Visualizar Cuadro de honor " << endl;
+    cout << "(6) Visualizar promedio de clases" << endl;
+    cout << "(7) Visualizar metricas de estudiantes aprobados y reprobados " << endl;
+    cout << "(8) Visualizar notas maximas y minimas registradas en el curso" << endl;
+    cout << "(9) Visualizar datos individuales de cada estudiante " << endl;
+    cout << "(10) Salir del sistema " << endl;
     cout << "---------------------------------------------------------" << endl;
     cout << endl;
 }
@@ -81,6 +82,64 @@ int registrarEstudiante(Estudiante estudiantes[], int cantidadEstudiantes)
 
 }
 
+void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes){
+
+    int op = 0;
+
+    do
+    {
+        /*Aqui va recorriendo cada alumno para poder editarles las notas uno por uno pero quiero consultarle a la inge elisa si es mejor que el usuario elija a el estudiante
+        para poder ir editando al estudiante que ella necesite */
+
+        for(int i = 0; i < cantidadEstudiantes; i++){
+
+            cout<<"Estudiante"<<"("<<i+1<<")";
+            cout << "\nNombre del estudiante: "<<estudiantes[i].nombres;
+            cout << "\nApellidos del estudiante: "<<estudiantes[i].apellidos;
+            cout << "\nNombre del curso del estudiante: "<<estudiantes[i].curso;
+            cout << "\nCodigo del estudiante: "<<estudiantes[i].identificador<<endl;
+
+
+            cout << "\nSi desea realizar un ingreso o actualizacion a la primera nota ingrese (1)";
+            cout << "\nSi desea realizar un ingreso o actualizacion a la segunda nota ingrese (2)";
+            cout << "\nSi desea realizar un ingreso o actualizacion a la tercera nota ingrese (3)";
+            cout <<"\nIngrese (4) si desea pasar hacia el siguiente estudiante"<<endl;
+
+            cin>>op;
+
+            if (op == 1)
+            {
+            cout << "\nIngrese la primera nota: ";
+            cin>>estudiantes[i].nota1;
+            }
+            else if (op == 2)
+            {
+            cout << "\nIngrese la segunda nota: ";
+            cin>>estudiantes[i].nota2;
+            }
+            else if (op == 3)
+            {
+                cout << "\nIngrese la tercera nota: ";
+                cin>>estudiantes[i].nota3;
+            }else{
+                            
+                cout << "\nMostrando siguiente estudiante: "<<endl;
+            }
+            
+        }
+
+                    
+        cout << "\nPresione (4) si desea salir hacia el menu, presione enter si necesita hacer otros cambios"<<endl;
+        cin>>op;
+
+        if (op == 4)
+        {
+            cout<<"Regresando al menu....."<<endl;
+        }
+
+    } while (op != 4);
+}
+
 
 
 
@@ -105,7 +164,7 @@ int main()
             /*esto nada mas lo cree para que puedan ver si de verdad guardaba la cantidad y no tiraba error*/
             cout << "\ncantidad de estudiantes:  "<< CantidadEstudiantes<<endl;
 
-            //Esto lo cree para poder observar si, podia mostrarlos los estudiantes o si tenia error, despues lo metemos en funcion xd.
+            /*Esto lo cree para poder observar si, podia mostrarlos los estudiantes o si tenia error, despues lo metemos en funcion xd.
             cout<<"\nEstudiantes registrados: "<<endl;
 
 
@@ -117,60 +176,84 @@ int main()
             cout << "\nNombre del curso del estudiante: "<<estudiantes[i].curso;
             cout << "\nCodigo del estudiante: "<<estudiantes[i].identificador<<endl;
             cout<< endl;
-            }
+            }*/
 
 
             break;
 
+
         case 2:
+            
+            registroNotas(estudiantes, CantidadEstudiantes);
+
+           /* este bloque de codigo es para mostrar la informacion completa de los estudiantes y sus notas, de aqui se pueden basar para hacer las partes de notas
+           individuales y etc.
+           
+           for(int i = 0; i < CantidadEstudiantes; i++){
+
+            cout<<"\nEstudiante "<<"("<<i + 1<<")"<<endl;
+            cout << "\nNombre del estudiante: "<<estudiantes[i].nombres;
+            cout << "\nApellidos del estudiante: "<<estudiantes[i].apellidos;
+            cout << "\nNombre del curso del estudiante: "<<estudiantes[i].curso;
+            cout << "\nCodigo del estudiante: "<<estudiantes[i].identificador<<endl;
+            cout << "\nNota 1: "<<estudiantes[i].nota1<<endl;
+            cout << "\nNota 2: "<<estudiantes[i].nota2<<endl;
+            cout << "\nNota 3: "<<estudiantes[i].nota3<<endl;
+            cout<< endl;
+            }*/
+
+            break;
+
+
+        case 3:
             
             /*cuadro de honor */
 
 
             break;
 
-        case 3:
+        case 4:
             /*Funcion de estadisticas*/
 
             break;
 
-        case 4:
+        case 5:
             /*Funcion promedio de la clase*/
 
             break;
 
-        case 5:
+        case 6:
             /*Funcion de metricas de estudiantes aprobados y reprobados*/
 
             break;
 
-        case 6:
+        case 7:
             /*Funcion notas maximas y minimas registradas en el curso*/
 
             break;
 
-        case 7:
+        case 8:
             /*Funcion datos generales e individuales de cada estudiante/ y busqueda de
             cada estudiantes con identificador unico*/
             break;
 
-        case 8:
+        case 9:
             /*Funcion cuadro de honor*/
             break;
 
-        case 9:
+        case 10:
             cout << "Saliendo del sistema....." << endl;
             break;
         }
 
-        if (opcion > 9 || opcion < 1 )
+        if (opcion > 10 || opcion < 1 )
         {
             cout << endl;
             cout << "Ingresa una opcion valida..." << endl;
             cout << endl;
         }
 
-    } while (opcion != 9);
+    } while (opcion != 10);
 
     return 0;
 }
