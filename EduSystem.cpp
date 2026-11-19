@@ -110,7 +110,6 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
             cout << "\nApellidos del estudiante: " << estudiantes[i].apellidos;
             cout << "\nNombre del curso del estudiante: " << estudiantes[i].curso;
             cout << "\nCodigo del estudiante: " << estudiantes[i].identificador << endl;
-
             cout << "\nSi desea realizar un ingreso o actualizacion a la primera nota ingrese (1)";
             cout << "\nSi desea realizar un ingreso o actualizacion a la segunda nota ingrese (2)";
             cout << "\nSi desea realizar un ingreso o actualizacion a la tercera nota ingrese (3)";
