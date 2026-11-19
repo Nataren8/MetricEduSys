@@ -161,13 +161,15 @@ void mostrarListadoGeneral(Estudiante estudiantes[], int cantidadEstudiantes)
 /* FUNCIÓN PARA ENCONTRAR A UN ESTUDIANTE */
 void consultarExpediente(Estudiante estudiantes[], int cantidadEstudiantes)
 {
+
+    string codigoBuscar;
+    
     if (cantidadEstudiantes == 0)
     {
         cout << "\nNo hay estudiantes registrados para consultar.\n";
         return;
     }
 
-    string codigoBuscar;
     cout << "\nIngrese el codigo (identificador) del estudiante a consultar: ";
     cin >> codigoBuscar;
 
