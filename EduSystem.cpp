@@ -46,7 +46,9 @@ int registrarEstudiante(Estudiante estudiantes[], int cantidadEstudiantes)
 
     do
     {
-        cout << "\nIngrese los datos del estudiante: " << endl;
+        cout << "-----------------------------" << endl;
+        cout << "---REGISTRO DE ESTUDIANTES---" << endl;
+        cout << "-----------------------------" << endl;
 
         cout << "\nIngrese el nombre del estudiante: ";
         getline(cin >> ws, estudiantes[cantidadEstudiantes].nombres);
@@ -109,11 +111,11 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
             cout << "\nNombre del estudiante: " << estudiantes[i].nombres;
             cout << "\nApellidos del estudiante: " << estudiantes[i].apellidos;
             cout << "\nNombre del curso del estudiante: " << estudiantes[i].curso;
-            cout << "\nCodigo del estudiante: " << estudiantes[i].identificador << endl;
+            cout << "\nCodigo del estudiante: " << estudiantes[i].identificador;
             cout << "\nSi desea realizar un ingreso o actualizacion a la primera nota ingrese (1)";
             cout << "\nSi desea realizar un ingreso o actualizacion a la segunda nota ingrese (2)";
             cout << "\nSi desea realizar un ingreso o actualizacion a la tercera nota ingrese (3)";
-            cout << "\nIngrese (4) si desea pasar hacia el siguiente estudiante" << endl;
+            cout << "\nIngrese (4) si desea pasar hacia el siguiente estudiante\n";
 
             cin >> opcionMenu;
 
