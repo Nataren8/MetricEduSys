@@ -4,6 +4,7 @@ using namespace std;
 
 /*Ricardo y camilo, les dejare comentarios para que logren entender
 a profundidad   */
+const float NOTA_MINIMA = 6.0;
 
 struct Estudiante
 {
@@ -140,7 +141,70 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes){
     } while (op != 4);
 }
 
+// Función auxiliar para calcular el promedio de las 3 notas
+float calcularPromedio(Estudiante est) {
+    return (est.nota1 + est.nota2 + est.nota3) / 3.0;
+}
 
+// Muestra a todos los estudiantes registrados (Listado General)
+void mostrarListadoGeneral(Estudiante estudiantes[], int cantidadEstudiantes) {
+    if (cantidadEstudiantes == 0) {
+        cout << "\nNo hay estudiantes registrados en el sistema.\n";
+        return;
+    }
+
+    cout << "\n--- LISTADO GENERAL DE ESTUDIANTES ---\n";
+    for (int i = 0; i < cantidadEstudiantes; i++) {
+        float prom = calcularPromedio(estudiantes[i]);
+        cout << "Codigo: " << estudiantes[i].identificador
+             << " | Nombre: " << estudiantes[i].nombres << " " << estudiantes[i].apellidos
+             << " | Curso: " << estudiantes[i].curso
+             << " | Promedio: " << prom << endl;
+    }
+}
+
+// Busca un estudiante por su identificador y muestra su expediente
+void consultarExpediente(Estudiante estudiantes[], int cantidadEstudiantes) {
+    if (cantidadEstudiantes == 0) {
+        cout << "\nNo hay estudiantes registrados para consultar.\n";
+        return;
+    }
+
+    string codigoBuscar;
+    cout << "\nIngrese el codigo (identificador) del estudiante a consultar: ";
+    cin >> codigoBuscar;
+
+    bool encontrado = false;
+
+    for (int i = 0; i < cantidadEstudiantes; i++) {
+        if (estudiantes[i].identificador == codigoBuscar) {
+            encontrado = true;
+            float prom = calcularPromedio(estudiantes[i]);
+
+            cout << "\n=== Expediente Academico ===\n";
+            cout << "Codigo: " << estudiantes[i].identificador << endl;
+            cout << "Nombre: " << estudiantes[i].nombres << " " << estudiantes[i].apellidos << endl;
+            cout << "Curso:  " << estudiantes[i].curso << endl;
+            cout << "Calificaciones:\n";
+            cout << " - Nota 1: " << estudiantes[i].nota1 << endl;
+            cout << " - Nota 2: " << estudiantes[i].nota2 << endl;
+            cout << " - Nota 3: " << estudiantes[i].nota3 << endl;
+
+            cout << "Promedio Final: " << prom << endl;
+            if (prom >= NOTA_MINIMA) {
+                cout << "Estado: APROBADO\n";
+            } else {
+                cout << "Estado: REPROBADO\n";
+            }
+            break;
+        }
+        break;
+    }
+
+    if (!encontrado) {
+        cout << "\nError: El codigo " << codigoBuscar << " no existe en el registro.\n";
+    }
+}
 
 
 int main()
@@ -237,9 +301,24 @@ int main()
             cada estudiantes con identificador unico*/
             break;
 
-        case 9:
-            /*Funcion cuadro de honor*/
+        case 9:{
+            // Visualizar datos individuales de cada estudiante
+            int subOpcion = 0;
+            cout << "\n--- CONSULTA DE DATOS ---\n";
+            cout << "1. Ver listado general de todos los estudiantes\n";
+            cout << "2. Consultar expediente individual por codigo\n";
+            cout << "Elige una opcion: ";
+            cin >> subOpcion;
+
+            if (subOpcion == 1){
+                mostrarListadoGeneral(estudiantes, CantidadEstudiantes);
+            }else if (subOpcion == 2) {
+                consultarExpediente(estudiantes, CantidadEstudiantes);
+            }else {
+                cout << "\nOpcion no valida.\n";
+            }
             break;
+        }
 
         case 10:
             cout << "Saliendo del sistema....." << endl;
