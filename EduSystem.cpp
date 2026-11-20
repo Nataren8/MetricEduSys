@@ -107,6 +107,9 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
 
         for (int i = 0; i < cantidadEstudiantes; i++)
         {
+            cout << "-----------------------------" << endl;
+            cout << "------REGISTRO DE NOTAS------" << endl;
+            cout << "-----------------------------" << endl;
             cout << "\nEstudiante" << "(" << i + 1 << ")";
             cout << "\nNombre del estudiante: " << estudiantes[i].nombres;
             cout << "\nApellidos del estudiante: " << estudiantes[i].apellidos;
@@ -151,83 +154,24 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
     cout << "Cambios guardados. Regresando al menu..." << endl;
 }
 
-/* FUNCIÓN PARA CALCULAR EL PROMEDIO DE LAS TRES NOTAS*/
-float calcularPromedio(Estudiante est)
+/* FUNCIÓN PARA CALCULAR EL PROMEDIO DE CADA ESTUDIANTE */
+
+void calcularPromedio()
 {
-    return (est.nota1 + est.nota2 + est.nota3) / 3.0;
-}
+    Estudiante estudiantes;
+    float promedioNotas = 0;
+    float sumaNotas = 0;
 
-/* FUNCIÓN PARA MOSTRAR A TODOS LOS ESTUDIANTES REGISTRADOS */
-void mostrarListadoGeneral(Estudiante estudiantes[], int cantidadEstudiantes)
-{
-    if (cantidadEstudiantes == 0)
+    ifstream archivo("estudiantes.txt");
+
+    while (archivo >> estudiantes.identificador >> estudiantes.nombres >> estudiantes.apellidos >> estudiantes.curso >> estudiantes.nota1 >> estudiantes.nota2 >> estudiantes.nota3)
     {
-        cout << "\nNo hay estudiantes registrados en el sistema.\n";
-        return;
+        sumaNotas = estudiantes.nota1 + estudiantes.nota2 + estudiantes.nota3;
+        promedioNotas = sumaNotas / 3;
+        cout << estudiantes.nombres << " " << estudiantes.apellidos << " || PROMEDIO: " << promedioNotas << endl;
     }
 
-    cout << "\n--- LISTADO GENERAL DE ESTUDIANTES ---\n";
-    for (int i = 0; i < cantidadEstudiantes; i++)
-    {
-        float prom = calcularPromedio(estudiantes[i]);
-        cout << "Codigo: " << estudiantes[i].identificador
-             << " | Nombre: " << estudiantes[i].nombres << " " << estudiantes[i].apellidos
-             << " | Curso: " << estudiantes[i].curso
-             << " | Promedio: " << prom << endl;
-    }
-}
-
-/* FUNCIÓN PARA ENCONTRAR A UN ESTUDIANTE */
-void consultarExpediente(Estudiante estudiantes[], int cantidadEstudiantes)
-{
-
-    string codigoBuscar;
-
-    if (cantidadEstudiantes == 0)
-    {
-        cout << "\nNo hay estudiantes registrados para consultar.\n";
-        return;
-    }
-
-    cout << "\nIngrese el codigo (identificador) del estudiante a consultar: ";
-    cin >> codigoBuscar;
-
-    bool encontrado = false;
-
-    for (int i = 0; i < cantidadEstudiantes; i++)
-    {
-        if (estudiantes[i].identificador == codigoBuscar)
-        {
-            encontrado = true;
-            float prom = calcularPromedio(estudiantes[i]);
-
-            cout << "\n=== Expediente Academico ===\n";
-            cout << "Codigo: " << estudiantes[i].identificador << endl;
-            cout << "Nombre: " << estudiantes[i].nombres << " " << estudiantes[i].apellidos << endl;
-            cout << "Curso:  " << estudiantes[i].curso << endl;
-            cout << "Calificaciones:\n";
-            cout << " - Nota 1: " << estudiantes[i].nota1 << endl;
-            cout << " - Nota 2: " << estudiantes[i].nota2 << endl;
-            cout << " - Nota 3: " << estudiantes[i].nota3 << endl;
-
-            cout << "Promedio Final: " << prom << endl;
-            if (prom >= NOTA_MINIMA)
-            {
-                cout << "Estado: APROBADO\n";
-            }
-            else
-            {
-                cout << "Estado: REPROBADO\n";
-            }
-            break;
-        }
-        break;
-    }
-
-    if (!encontrado)
-    {
-        cout << "\nError: El codigo " << codigoBuscar << " no existe en el registro.\n";
-    }
+    archivo.close();
 }
 
 int main()
@@ -302,8 +246,7 @@ int main()
             break;
 
         case 5:
-            /*Funcion promedio de la clase*/
-
+            calcularPromedio();
             break;
 
         case 6:
@@ -323,29 +266,7 @@ int main()
             break;
 
         case 9:
-        {
-            // Visualizar datos individuales de cada estudiante
-            int subOpcion = 0;
-            cout << "\n--- CONSULTA DE DATOS ---\n";
-            cout << "1. Ver listado general de todos los estudiantes\n";
-            cout << "2. Consultar expediente individual por codigo\n";
-            cout << "Elige una opcion: ";
-            cin >> subOpcion;
-
-            if (subOpcion == 1)
-            {
-                mostrarListadoGeneral(estudiantes, CantidadEstudiantes);
-            }
-            else if (subOpcion == 2)
-            {
-                consultarExpediente(estudiantes, CantidadEstudiantes);
-            }
-            else
-            {
-                cout << "\nOpcion no valida.\n";
-            }
             break;
-        }
 
         case 10:
             cout << "Saliendo del sistema....." << endl;
