@@ -12,7 +12,6 @@ struct Estudiante
 {
     string nombres;
     string apellidos;
-    string curso;
     string identificador;
     float nota1 = 0;
     float nota2 = 0;
@@ -24,7 +23,6 @@ void mostrarMenu()
 {
     cout << "---------------------------------------------------------" << endl;
     cout << "¡Bienvenido a MetricEduSystem!" << endl;
-    cout << "Ingresa el numero de opcion que necesitas realizar" << endl;
     cout << "(1) Registrar Estudiante" << endl;
     cout << "(2) Editar notas de estudiantes " << endl;
     cout << "(3) Visualizar Cuadro de honor " << endl;
@@ -56,9 +54,6 @@ int registrarEstudiante(Estudiante estudiantes[], int cantidadEstudiantes)
         cout << "\nIngrese los apellidos del estudiante: ";
         getline(cin >> ws, estudiantes[cantidadEstudiantes].apellidos);
 
-        cout << "\nIngrese el nombre del curso del estudiante: ";
-        getline(cin >> ws, estudiantes[cantidadEstudiantes].curso);
-
         cout << "\nIngrese el codigo del estudiante: ";
         cin >> estudiantes[cantidadEstudiantes].identificador;
 
@@ -88,7 +83,6 @@ void guardarNotas(Estudiante estudiantes[], int cantidadEstudiantes)
         archivo << estudiantes[i].identificador << " "
                 << estudiantes[i].nombres << " "
                 << estudiantes[i].apellidos << " "
-                << estudiantes[i].curso << " "
                 << estudiantes[i].nota1 << " "
                 << estudiantes[i].nota2 << " "
                 << estudiantes[i].nota3 << endl;
@@ -113,7 +107,6 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
             cout << "\nEstudiante" << "(" << i + 1 << ")";
             cout << "\nNombre del estudiante: " << estudiantes[i].nombres;
             cout << "\nApellidos del estudiante: " << estudiantes[i].apellidos;
-            cout << "\nNombre del curso del estudiante: " << estudiantes[i].curso;
             cout << "\nCodigo del estudiante: " << estudiantes[i].identificador;
             cout << "\nSi desea realizar un ingreso o actualizacion a la primera nota ingrese (1)";
             cout << "\nSi desea realizar un ingreso o actualizacion a la segunda nota ingrese (2)";
@@ -164,7 +157,7 @@ void calcularPromedio()
 
     ifstream archivo("estudiantes.txt");
 
-    while (archivo >> estudiantes.identificador >> estudiantes.nombres >> estudiantes.apellidos >> estudiantes.curso >> estudiantes.nota1 >> estudiantes.nota2 >> estudiantes.nota3)
+    while (archivo >> estudiantes.identificador >> estudiantes.nombres >> estudiantes.apellidos >> estudiantes.nota1 >> estudiantes.nota2 >> estudiantes.nota3)
     {
         sumaNotas = estudiantes.nota1 + estudiantes.nota2 + estudiantes.nota3;
         promedioNotas = sumaNotas / 3;
@@ -176,92 +169,46 @@ void calcularPromedio()
 
 int main()
 {
-    Estudiante estudiantes[200]; // Esto solo es un valor quemado para la cantidad de estudiantes que podemos meter en la plataforma.
+    Estudiante estudiantes[200];
     int CantidadEstudiantes = 0;
 
     int opcion = 0;
-    int evaluaciones;
 
     do
     {
         mostrarMenu();
         cin >> opcion;
-        /*para cada caso, le utilizaremos para las diferentes funciones, se puede editar
-        en caso de que existan mas funciones.*/
         switch (opcion)
         {
         case 1:
-            //
             CantidadEstudiantes = registrarEstudiante(estudiantes, CantidadEstudiantes);
-            /*esto nada mas lo cree para que puedan ver si de verdad guardaba la cantidad y no tiraba error*/
             cout << "\ncantidad de estudiantes:  " << CantidadEstudiantes << endl;
-
-            /*Esto lo cree para poder observar si, podia mostrarlos los estudiantes o si tenia error, despues lo metemos en funcion xd.
-            cout<<"\nEstudiantes registrados: "<<endl;
-
-
-            for(int i = 0; i < CantidadEstudiantes; i++){
-
-            cout<<"\nEstudiante "<<"("<<i + 1<<")"<<endl;
-            cout << "\nNombre del estudiante: "<<estudiantes[i].nombres;
-            cout << "\nApellidos del estudiante: "<<estudiantes[i].apellidos;
-            cout << "\nNombre del curso del estudiante: "<<estudiantes[i].curso;
-            cout << "\nCodigo del estudiante: "<<estudiantes[i].identificador<<endl;
-            cout<< endl;
-            }*/
-
             break;
 
         case 2:
 
             registroNotas(estudiantes, CantidadEstudiantes);
-
-            /* este bloque de codigo es para mostrar la informacion completa de los estudiantes y sus notas, de aqui se pueden basar para hacer las partes de notas
-            individuales y etc.
-
-            for(int i = 0; i < CantidadEstudiantes; i++){
-
-             cout<<"\nEstudiante "<<"("<<i + 1<<")"<<endl;
-             cout << "\nNombre del estudiante: "<<estudiantes[i].nombres;
-             cout << "\nApellidos del estudiante: "<<estudiantes[i].apellidos;
-             cout << "\nNombre del curso del estudiante: "<<estudiantes[i].curso;
-             cout << "\nCodigo del estudiante: "<<estudiantes[i].identificador<<endl;
-             cout << "\nNota 1: "<<estudiantes[i].nota1<<endl;
-             cout << "\nNota 2: "<<estudiantes[i].nota2<<endl;
-             cout << "\nNota 3: "<<estudiantes[i].nota3<<endl;
-             cout<< endl;
-             }*/
-
             break;
 
         case 3:
-
-            /*cuadro de honor */
-
             break;
 
         case 4:
-            /*Funcion de estadisticas*/
-
             break;
 
         case 5:
-            calcularPromedio();
+            calcularPromedio;
             break;
 
         case 6:
-            /*Funcion de metricas de estudiantes aprobados y reprobados*/
             cout << "Trabajando en ello..." << endl;
             break;
 
         case 7:
-            /*Funcion notas maximas y minimas registradas en el curso*/
             cout << "Trabajando en ello..." << endl;
             break;
 
         case 8:
-            /*Funcion datos generales e individuales de cada estudiante/ y busqueda de
-            cada estudiantes con identificador unico*/
             cout << "Trabajando en ello..." << endl;
             break;
 
@@ -271,13 +218,6 @@ int main()
         case 10:
             cout << "Saliendo del sistema....." << endl;
             break;
-        }
-
-        if (opcion > 10 || opcion < 1)
-        {
-            cout << endl;
-            cout << "Ingresa una opcion valida..." << endl;
-            cout << endl;
         }
 
     } while (opcion != 10);
