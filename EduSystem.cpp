@@ -4,7 +4,7 @@
 
 using namespace std;
 
-/*ESTABLECEMOS LA NOTA MÍNIMA DE 6.0*/
+/*CONSTANTE CON LA NOTA MÍNIMA DE 6.0*/
 const float NOTA_MINIMA = 6.0;
 
 /*DATOS DEL ESTUDIANTE*/
@@ -27,7 +27,7 @@ void mostrarMenu()
     cout << "(2) Editar notas de estudiantes " << endl;
     cout << "(3) Visualizar Cuadro de honor " << endl;
     cout << "(4) Visualizar Estadisticas " << endl;
-    cout << "(5) Visualizar Cuadro de honor " << endl;
+    cout << "(5) Visualizar promedio de cada estudiante " << endl;
     cout << "(6) Visualizar promedio de clases" << endl;
     cout << "(7) Visualizar metricas de estudiantes aprobados y reprobados " << endl;
     cout << "(8) Visualizar notas maximas y minimas registradas en el curso" << endl;
@@ -131,10 +131,10 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
                 cin >> estudiantes[i].nota3;
                 break;
             case 4:
-                cout << "Pasando al siguiente estudiante...";
+                cout << "Pasando al siguiente estudiante..." << endl;
                 break;
             default:
-                cout << "Ingrese una opcion valida";
+                cout << "Ingrese una opcion valida" << endl;
             }
         }
 
@@ -167,10 +167,117 @@ void calcularPromedio()
     archivo.close();
 }
 
+/* FUNCIÓN PARA MOSTRAR LA CANTIDAD DE ESTUDIANTES APROBADOS Y REPROBADOS */
+void metricasAprobados()
+{
+    Estudiante estudiante;
+    float promedioNotas = 0;
+    int aprobados = 0;
+    int reprobados = 0;
+
+    ifstream archivo("estudiantes.txt");
+
+    while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+    {
+        promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
+
+        if (promedioNotas >= NOTA_MINIMA)
+        {
+            aprobados++;
+        }
+        else
+        {
+            reprobados++;
+        }
+    }
+
+    archivo.close();
+
+    int total = aprobados + reprobados;
+
+    if (total == 0)
+    {
+        cout << "No hay estudiantes registrados." << endl;
+        return;
+    }
+
+    cout << "-----------------------------" << endl;
+    cout << "--APROBADOS Y REPROBADOS--" << endl;
+    cout << "-----------------------------" << endl;
+    cout << "Total de estudiantes: " << total << endl;
+    cout << "Aprobados:  " << aprobados << " (" << aprobados * 100.0 / total << "%)" << endl;
+    cout << "Reprobados: " << reprobados << " (" << reprobados * 100.0 / total << "%)" << endl;
+}
+
+/* FUNCIÓN PARA MOSTRAR EL PROMEDIO MÁS ALTO Y EL MÁS BAJO DEL CURSO */
+
+void promedioMaximo()
+{
+    Estudiante estudiante;
+    float promedioNotas = 0;
+    float promedioMaximo = -0.1;
+    string nombreEstudiante;
+
+    ifstream archivo("estudiantes.txt");
+
+    while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+    {
+        promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
+
+        if (promedioNotas > promedioMaximo)
+        {
+            promedioMaximo = promedioNotas;
+            nombreEstudiante = estudiante.nombres + " " + estudiante.apellidos;
+        }
+    }
+
+    archivo.close();
+    cout << "El promedio mas alto es: " << promedioMaximo << " del alumno: " << nombreEstudiante << endl;
+}
+
+void promedioMinimo()
+{
+    Estudiante estudiante;
+    float promedioNotas = 0;
+    float promedioMinimo = 10.1;
+    string nombreEstudiante;
+
+    ifstream archivo("estudiantes.txt");
+
+    while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+    {
+        promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
+
+        if (promedioNotas < promedioMinimo)
+        {
+            promedioMinimo = promedioNotas;
+            nombreEstudiante = estudiante.nombres + " " + estudiante.apellidos;
+        }
+    }
+
+    archivo.close();
+    cout << "El promedio mas bajo es: " << promedioMinimo <<  " del alumno: " << nombreEstudiante << endl;
+}
+
+/* FUNCIÓN PARA CARGAR LOS ESTUDIANTES GUARDADOS EN EL ARCHIVO AL INICIAR EL PROGRAMA */
+int cargarEstudiantes(Estudiante estudiantes[])
+{
+    int cantidad = 0;
+    ifstream archivo("estudiantes.txt");
+
+    while (cantidad < 200 && archivo >> estudiantes[cantidad].identificador >> estudiantes[cantidad].nombres >> estudiantes[cantidad].apellidos >> estudiantes[cantidad].nota1 >> estudiantes[cantidad].nota2 >> estudiantes[cantidad].nota3)
+    {
+        cantidad++;
+    }
+
+    archivo.close();
+    return cantidad;
+}
+
 int main()
 {
     Estudiante estudiantes[200];
-    int CantidadEstudiantes = 0;
+    int CantidadEstudiantes = cargarEstudiantes(estudiantes); // recupera lo que ya estaba guardado
 
     int opcion = 0;
 
@@ -182,6 +289,7 @@ int main()
         {
         case 1:
             CantidadEstudiantes = registrarEstudiante(estudiantes, CantidadEstudiantes);
+            guardarNotas(estudiantes, CantidadEstudiantes); // guarda a los nuevos estudiantes en el archivo
             cout << "\ncantidad de estudiantes:  " << CantidadEstudiantes << endl;
             break;
 
@@ -197,7 +305,7 @@ int main()
             break;
 
         case 5:
-            calcularPromedio;
+            calcularPromedio();
             break;
 
         case 6:
@@ -205,11 +313,12 @@ int main()
             break;
 
         case 7:
-            cout << "Trabajando en ello..." << endl;
+            metricasAprobados();
             break;
 
         case 8:
-            cout << "Trabajando en ello..." << endl;
+            promedioMaximo();
+            promedioMinimo();
             break;
 
         case 9:
@@ -218,6 +327,9 @@ int main()
         case 10:
             cout << "Saliendo del sistema....." << endl;
             break;
+
+        default:
+            cout << "Opcion no valida, ingrese un numero del 1 al 10" << endl;
         }
 
     } while (opcion != 10);
