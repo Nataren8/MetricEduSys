@@ -277,7 +277,7 @@ int cargarEstudiantes(Estudiante estudiantes[])
 int main()
 {
     Estudiante estudiantes[200];
-    int CantidadEstudiantes = cargarEstudiantes(estudiantes); // recupera lo que ya estaba guardado
+    int CantidadEstudiantes = cargarEstudiantes(estudiantes);
 
     int opcion = 0;
 
@@ -289,7 +289,7 @@ int main()
         {
         case 1:
             CantidadEstudiantes = registrarEstudiante(estudiantes, CantidadEstudiantes);
-            guardarNotas(estudiantes, CantidadEstudiantes); // guarda a los nuevos estudiantes en el archivo
+            guardarNotas(estudiantes, CantidadEstudiantes);
             cout << "\ncantidad de estudiantes:  " << CantidadEstudiantes << endl;
             break;
 
