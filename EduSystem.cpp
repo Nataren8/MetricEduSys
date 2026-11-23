@@ -283,6 +283,11 @@ int main()
 
     do
     {
+
+        cargarEstudiantes(estudiantes);// chicos esto lo agregue por que es imposible que el programa pueda leer el archivo sin llamar a la funcion,
+        //aqui la llama en cada iteracion del do while ya que es cuando se agrega un estudiante y etc, y al terminar de agregarlo lo vuelve a leer de manera rapida
+        //asi que esto esta arreglado.
+        
         mostrarMenu();
         cin >> opcion;
         switch (opcion)
