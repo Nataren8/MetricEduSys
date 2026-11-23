@@ -13,42 +13,48 @@ struct Estudiante
     string nombres;
     string apellidos;
     string identificador;
-    float nota1 = 0;
-    float nota2 = 0;
-    float nota3 = 0;
-    float promedio = 0;
+    float nota1 = 0.0;
+    float nota2 = 0.0;
+    float nota3 = 0.0;
+    float promedio = 0.0;
 };
 
 /*FUNCIÓN PARA MOSTRAR EL MENÚ*/
 void mostrarMenu()
 {
-    cout << "---------------------------------------------------------" << endl;
+    cout << "\n---------------------------------------------------------" << endl;
     cout << "¡Bienvenido a MetricEduSystem!" << endl;
     cout << "(1) Registrar Estudiante" << endl;
     cout << "(2) Editar notas de estudiantes " << endl;
     cout << "(3) Visualizar Cuadro de honor " << endl;
-    cout << "(4) Visualizar Estadisticas " << endl;
-    cout << "(5) Visualizar promedio de cada estudiante " << endl;
-    cout << "(6) Visualizar promedio de clases" << endl;
-    cout << "(7) Visualizar metricas de estudiantes aprobados y reprobados " << endl;
-    cout << "(8) Visualizar notas maximas y minimas registradas en el curso" << endl;
-    cout << "(9) Visualizar datos individuales de cada estudiante " << endl;
-    cout << "(10) Salir del sistema " << endl;
+    cout << "(4) Visualizar promedio de cada estudiante " << endl;
+    cout << "(5) Visualizar promedio de clases" << endl;
+    cout << "(6) Visualizar metricas de estudiantes aprobados y reprobados " << endl;
+    cout << "(7) Visualizar notas maximas y minimas registradas en el curso" << endl;
+    cout << "(8) Visualizar datos individuales de cada estudiante " << endl;
+    cout << "(9) Salir del sistema " << endl;
     cout << "---------------------------------------------------------" << endl;
     cout << endl;
 }
 
 int CuadroDeHonor(Estudiante estudiantes[], int cantidadEstudiantes){
 
-    float promedio = 0; 
+    int cont = 0;
 
     for(int i = 0; i< cantidadEstudiantes; i++){
 
         estudiantes[i].promedio = (estudiantes[i].nota1 + estudiantes[i].nota2 + estudiantes[i].nota3) / 3.0 ;
-        
+        cont++;
     }
 
-    cout<<"\nEstudiantes honorificos con promedio de 9 o superior"<< endl;
+    if (estudiantes[cont].promedio >= 9) // arreglar esto
+    {
+        cout<<"\nEstudiantes honorificos con promedio de 9 o superior"<< endl;
+    }else{
+        cout<<"No hay estudiantes o ningun promedio llega a 9 o superior aun.";
+    }
+    
+
 
     for (int i = 0; i < cantidadEstudiantes; i++){
         if (estudiantes[i].promedio >= 9)
@@ -120,13 +126,14 @@ void guardarNotas(Estudiante estudiantes[], int cantidadEstudiantes)
 void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
 {
     int opcionMenu = 0;
+    int tempVar = 0;
 
     do
     {
 
         for (int i = 0; i < cantidadEstudiantes; i++)
         {
-            cout << "-----------------------------" << endl;
+            cout << "\n-----------------------------" << endl;
             cout << "------REGISTRO DE NOTAS------" << endl;
             cout << "-----------------------------" << endl;
             cout << "\nEstudiante" << "(" << i + 1 << ")";
@@ -139,24 +146,38 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
             cout << "\nIngrese (4) si desea pasar hacia el siguiente estudiante\n";
 
             cin >> opcionMenu;
-
+            
+            
+            
             switch (opcionMenu)
             {
 
             case 1:
-                cout << "Ingrese la primera nota: ";
-                cin >> estudiantes[i].nota1;
+                if (estudiantes[i].nota1 == 0){
+                    cout << "\nIngrese la primera nota: ";
+                    cin >> estudiantes[i].nota1;                    
+                }else{
+                    cout<<"\nError. La opcion elegida ya tiene una nota.";
+                }
                 break;
             case 2:
-                cout << "Ingrese la segunda nota: ";
-                cin >> estudiantes[i].nota2;
+                if (estudiantes[i].nota2 == 0){
+                cout << "\nIngrese la segunda nota: ";
+                cin >> estudiantes[i].nota2;                   
+                }else{
+                    cout<<"\nError. La opcion elegida ya tiene una nota.";
+                }
                 break;
             case 3:
-                cout << "Ingrese la tercera nota: ";
-                cin >> estudiantes[i].nota3;
+                if (estudiantes[i].nota3 == 0){
+                cout << "\nIngrese la tercera nota: ";
+                cin >> estudiantes[i].nota3;                  
+                }else{
+                cout<<"\nError. La opcion elegida ya tiene una nota.";
+                }
                 break;
             case 4:
-                cout << "Pasando al siguiente estudiante..." << endl;
+                cout << "\nPasando al siguiente estudiante..." << endl;
                 break;
             default:
                 cout << "Ingrese una opcion valida" << endl;
@@ -226,7 +247,7 @@ void metricasAprobados()
         return;
     }
 
-    cout << "-----------------------------" << endl;
+    cout << "\n-----------------------------" << endl;
     cout << "--APROBADOS Y REPROBADOS--" << endl;
     cout << "-----------------------------" << endl;
     cout << "Total de estudiantes: " << total << endl;
@@ -299,6 +320,44 @@ int cargarEstudiantes(Estudiante estudiantes[])
     return cantidad;
 }
 
+void BusquedaCodigo(Estudiante estudiantes[], int cantidadEstudiantes){ // faltan retoques de la busquedacodigo
+
+    string BusquedaCod;
+
+    // falta un do while a este para que sea mejor.
+    for (int i = 0; i < cantidadEstudiantes; i++){
+    cout<<"\nEstudiante : " << estudiantes[i].nombres <<" " <<estudiantes[i].apellidos<<" || " <<"Codigo: "<<estudiantes[i].identificador <<endl ;
+    }
+    cout<<"\nIngresa el codigo del estudiante que desea solicitar su informacion: "<<endl;
+    cin>>BusquedaCod;
+
+    for (int i = 0; i < cantidadEstudiantes; i++)
+    {
+        cout<<"\nEstudiante : " << estudiantes[i].nombres <<" " <<estudiantes[i].apellidos<<" || " <<"Codigo: "<<estudiantes[i].identificador <<endl ;
+        
+        if(estudiantes[i].identificador == BusquedaCod){
+
+            cout << "\n-----------------------------" << endl;
+            cout << "------Informacion estudiantil------" << endl;
+            cout << "-----------------------------" << endl;
+            cout << "\nEstudiante" << "(" << i + 1 << ")";
+            cout << "\nNombre del estudiante: " << estudiantes[i].nombres;
+            cout << "\nApellidos del estudiante: " << estudiantes[i].apellidos;
+            cout << "\nCodigo del estudiante: " << estudiantes[i].identificador;
+            cout << "\nNota 1 : " << estudiantes[i].nota1;
+            cout << "\nNota 2 : " << estudiantes[i].nota2;
+            cout << "\nNota 3 : " << estudiantes[i].nota3;
+            cout << "\nPromedio: " << estudiantes[i].promedio;
+        }else{
+            cout << "\nEl codigo: " << BusquedaCod<<" No existe, intenta con un codigo existente";
+        }
+    }
+
+
+    
+    
+}
+
 int main()
 {
     Estudiante estudiantes[200];
@@ -333,29 +392,27 @@ int main()
             break;
 
         case 4:
-            break;
-
-        case 5:
             calcularPromedio();
             break;
 
-        case 6:
+        case 5:
             cout << "Trabajando en ello..." << endl;
             break;
 
-        case 7:
+        case 6:
             metricasAprobados();
             break;
 
-        case 8:
+        case 7:
             promedioMaximo();
             promedioMinimo();
             break;
 
-        case 9:
+        case 8:
+            BusquedaCodigo(estudiantes, CantidadEstudiantes);
             break;
 
-        case 10:
+        case 9:
             cout << "Saliendo del sistema....." << endl;
             break;
 
@@ -363,7 +420,7 @@ int main()
             cout << "Opcion no valida, ingrese un numero del 1 al 10" << endl;
         }
 
-    } while (opcion != 10);
+    } while (opcion != 9);
 
     return 0;
 }
