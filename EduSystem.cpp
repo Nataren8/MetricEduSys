@@ -16,6 +16,7 @@ struct Estudiante
     float nota1 = 0;
     float nota2 = 0;
     float nota3 = 0;
+    float promedio = 0;
 };
 
 /*FUNCIÓN PARA MOSTRAR EL MENÚ*/
@@ -35,6 +36,30 @@ void mostrarMenu()
     cout << "(10) Salir del sistema " << endl;
     cout << "---------------------------------------------------------" << endl;
     cout << endl;
+}
+
+int CuadroDeHonor(Estudiante estudiantes[], int cantidadEstudiantes){
+
+    float promedio = 0; 
+
+    for(int i = 0; i< cantidadEstudiantes; i++){
+
+        estudiantes[i].promedio = (estudiantes[i].nota1 + estudiantes[i].nota2 + estudiantes[i].nota3) / 3.0 ;
+        
+    }
+
+    cout<<"\nEstudiantes honorificos con promedio de 9 o superior"<< endl;
+
+    for (int i = 0; i < cantidadEstudiantes; i++){
+        if (estudiantes[i].promedio >= 9)
+        {
+           cout<<"\n"<<estudiantes[i].nombres<<" "<< estudiantes[i].apellidos; cout<<" || PROMEDIO: " << estudiantes[i].promedio<< endl;
+        }
+        
+    }
+
+    return 0;
+
 }
 
 /*FUNCIÓN PARA AGREGAR ESTUDIANTES*/
@@ -287,7 +312,7 @@ int main()
         cargarEstudiantes(estudiantes);// chicos esto lo agregue por que es imposible que el programa pueda leer el archivo sin llamar a la funcion,
         //aqui la llama en cada iteracion del do while ya que es cuando se agrega un estudiante y etc, y al terminar de agregarlo lo vuelve a leer de manera rapida
         //asi que esto esta arreglado.
-        
+
         mostrarMenu();
         cin >> opcion;
         switch (opcion)
@@ -304,6 +329,7 @@ int main()
             break;
 
         case 3:
+            CuadroDeHonor(estudiantes, CantidadEstudiantes);
             break;
 
         case 4:
