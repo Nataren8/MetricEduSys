@@ -323,20 +323,21 @@ int cargarEstudiantes(Estudiante estudiantes[])
 void BusquedaCodigo(Estudiante estudiantes[], int cantidadEstudiantes){ // faltan retoques de la busquedacodigo
 
     string BusquedaCod;
+    int encont = 0;
 
     // falta un do while a este para que sea mejor.
     for (int i = 0; i < cantidadEstudiantes; i++){
     cout<<"\nEstudiante : " << estudiantes[i].nombres <<" " <<estudiantes[i].apellidos<<" || " <<"Codigo: "<<estudiantes[i].identificador <<endl ;
     }
-    cout<<"\nIngresa el codigo del estudiante que desea solicitar su informacion: "<<endl;
-    cin>>BusquedaCod;
 
-    for (int i = 0; i < cantidadEstudiantes; i++)
+    do
     {
-        cout<<"\nEstudiante : " << estudiantes[i].nombres <<" " <<estudiantes[i].apellidos<<" || " <<"Codigo: "<<estudiantes[i].identificador <<endl ;
-        
-        if(estudiantes[i].identificador == BusquedaCod){
+        cout << "\nIngresa el codigo del estudiante que desea solicitar su informacion: " << endl;
+        cin >> BusquedaCod;
+        for (int i = 0; i < cantidadEstudiantes; i++){
 
+        if(estudiantes[i].identificador == BusquedaCod){
+            encont = 1;
             cout << "\n-----------------------------" << endl;
             cout << "------Informacion estudiantil------" << endl;
             cout << "-----------------------------" << endl;
@@ -348,12 +349,22 @@ void BusquedaCodigo(Estudiante estudiantes[], int cantidadEstudiantes){ // falta
             cout << "\nNota 2 : " << estudiantes[i].nota2;
             cout << "\nNota 3 : " << estudiantes[i].nota3;
             cout << "\nPromedio: " << estudiantes[i].promedio;
-        }else{
-            cout << "\nEl codigo: " << BusquedaCod<<" No existe, intenta con un codigo existente";
+            break;
+            }
         }
-    }
 
+        if (encont != 1)
+        {
+            cout << "\nEl codigo: " << BusquedaCod<<" No existe, intenta con un codigo existente"<<endl;
+        }
+        cout << "\n----------------------------------------------------------------------------------" << endl;
+        cout<<"\nSi desea volver a intentarlo presione (0), si desea volver al menu presione 1"<<endl;
+        cin>>encont;
 
+    } while (encont != 1);
+    
+
+    
     
     
 }
