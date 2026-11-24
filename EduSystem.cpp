@@ -112,6 +112,12 @@ void guardarNotas(Estudiante estudiantes[], int cantidadEstudiantes)
 {
     ofstream archivo("estudiantes.txt");
 
+        if (!archivo.is_open())
+    {
+        cout << "No se pudo abrir el archivo de estudiantes.txt para guardar." << endl;
+        return;
+    }
+
     for (int i = 0; i < cantidadEstudiantes; i++)
     {
         archivo << estudiantes[i].identificador << " "
@@ -282,6 +288,7 @@ void metricasAprobados()
     if (!archivo.is_open())
     {
         cout << "No se puedo abrir el archivo de estudiantes.txt" << endl;
+        return;
     }
     else
     {
@@ -391,6 +398,7 @@ int cargarEstudiantes(Estudiante estudiantes[])
     if (!archivo.is_open())
     {
         cout << "No se puedo abrir el archivo de estudiantes.txt" << endl;
+        return 0;
     }
     else
     {
