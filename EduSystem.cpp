@@ -134,8 +134,14 @@ void guardarNotas(Estudiante estudiantes[], int cantidadEstudiantes)
 /*FUNCIÓN PARA REGISTRAR NOTAS Y QUEDAN GUARDADAS EN ARCHIVO*/
 void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
 {
+        if (cantidadEstudiantes == 0)
+    {
+        cout << "\nNo hay estudiantes registrados aun. Registre al menos uno primero." << endl;
+        return; 
+    }
+
     int opcionMenu = 0;
-    int tempVar = 0;
+    float notaIngresada = 0.0;
 
     do
     {
@@ -160,38 +166,66 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
             {
 
             case 1:
-                if (estudiantes[i].nota1 == 0)
+
+            if (estudiantes[i].nota1 == 0)
                 {
-                    cout << "\nIngrese la primera nota: ";
-                    cin >> estudiantes[i].nota1;
+                    do
+                    {
+                        cout << "\nIngrese la primera nota (0.0 - 10.0): ";
+                        cin >> notaIngresada;
+                        if (notaIngresada < 0.0 || notaIngresada > 10.0)
+                        {
+                            cout << "Error: La nota debe estar entre 0.0 y 10.0. Intente de nuevo." << endl;
+                        }
+                    } while (notaIngresada < 0.0 || notaIngresada > 10.0);
+
+                    estudiantes[i].nota1 = notaIngresada;
                 }
                 else
                 {
-                    cout << "\nError. La opcion elegida ya tiene una nota.";
-                }
-                break;
+                    cout << "\nError. La opcion elegida ya tiene una nota." << endl;
+            }
+            break;
             case 2:
-                if (estudiantes[i].nota2 == 0)
+            if (estudiantes[i].nota2 == 0)
                 {
-                    cout << "\nIngrese la segunda nota: ";
-                    cin >> estudiantes[i].nota2;
+                    
+                    do
+                    {
+                        cout << "\nIngrese la segunda nota (0.0 - 10.0): ";
+                        cin >> notaIngresada;
+                        if (notaIngresada < 0.0 || notaIngresada > 10.0)
+                        {
+                            cout << "Error: La nota debe estar entre 0.0 y 10.0. Intente de nuevo." << endl;
+                        }
+                    } while (notaIngresada < 0.0 || notaIngresada > 10.0);
+
+                    estudiantes[i].nota2 = notaIngresada;
                 }
                 else
                 {
-                    cout << "\nError. La opcion elegida ya tiene una nota.";
+                    cout << "\nError. La opcion elegida ya tiene una nota." << endl;
                 }
-                break;
+            break;
             case 3:
-                if (estudiantes[i].nota3 == 0)
-                {
-                    cout << "\nIngrese la tercera nota: ";
-                    cin >> estudiantes[i].nota3;
+            if (estudiantes[i].nota3 == 0){
+                    do
+                    {
+                        cout << "\nIngrese la tercera nota (0.0 - 10.0): ";
+                        cin >> notaIngresada;
+                        if (notaIngresada < 0.0 || notaIngresada > 10.0)
+                        {
+                            cout << "Error: La nota debe estar entre 0.0 y 10.0. Intente de nuevo." << endl;
+                        }
+                    } while (notaIngresada < 0.0 || notaIngresada > 10.0);
+
+                    estudiantes[i].nota3 = notaIngresada;
                 }
                 else
                 {
-                    cout << "\nError. La opcion elegida ya tiene una nota.";
+                    cout << "\nError. La opcion elegida ya tiene una nota." << endl;
                 }
-                break;
+            break;
             case 4:
                 cout << "\nPasando al siguiente estudiante..." << endl;
                 break;
