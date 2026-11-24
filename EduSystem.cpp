@@ -37,35 +37,38 @@ void mostrarMenu()
     cout << endl;
 }
 
-int CuadroDeHonor(Estudiante estudiantes[], int cantidadEstudiantes){
+int CuadroDeHonor(Estudiante estudiantes[], int cantidadEstudiantes)
+{
 
     int cont = 0;
 
-    for(int i = 0; i< cantidadEstudiantes; i++){
+    for (int i = 0; i < cantidadEstudiantes; i++)
+    {
 
-        estudiantes[i].promedio = (estudiantes[i].nota1 + estudiantes[i].nota2 + estudiantes[i].nota3) / 3.0 ;
+        estudiantes[i].promedio = (estudiantes[i].nota1 + estudiantes[i].nota2 + estudiantes[i].nota3) / 3.0;
         cont++;
     }
 
     if (estudiantes[cont].promedio >= 9) // arreglar esto
     {
-        cout<<"\nEstudiantes honorificos con promedio de 9 o superior"<< endl;
-    }else{
-        cout<<"No hay estudiantes o ningun promedio llega a 9 o superior aun.";
+        cout << "\nEstudiantes honorificos con promedio de 9 o superior" << endl;
     }
-    
+    else
+    {
+        cout << "No hay estudiantes o ningun promedio llega a 9 o superior aun.";
+    }
 
-
-    for (int i = 0; i < cantidadEstudiantes; i++){
+    for (int i = 0; i < cantidadEstudiantes; i++)
+    {
         if (estudiantes[i].promedio >= 9)
         {
-           cout<<"\n"<<estudiantes[i].nombres<<" "<< estudiantes[i].apellidos; cout<<" || PROMEDIO: " << estudiantes[i].promedio<< endl;
+            cout << "\n"
+                 << estudiantes[i].nombres << " " << estudiantes[i].apellidos;
+            cout << " || PROMEDIO: " << estudiantes[i].promedio << endl;
         }
-        
     }
 
     return 0;
-
 }
 
 /*FUNCIÓN PARA AGREGAR ESTUDIANTES*/
@@ -146,34 +149,41 @@ void registroNotas(Estudiante estudiantes[], int cantidadEstudiantes)
             cout << "\nIngrese (4) si desea pasar hacia el siguiente estudiante\n";
 
             cin >> opcionMenu;
-            
-            
-            
+
             switch (opcionMenu)
             {
 
             case 1:
-                if (estudiantes[i].nota1 == 0){
+                if (estudiantes[i].nota1 == 0)
+                {
                     cout << "\nIngrese la primera nota: ";
-                    cin >> estudiantes[i].nota1;                    
-                }else{
-                    cout<<"\nError. La opcion elegida ya tiene una nota.";
+                    cin >> estudiantes[i].nota1;
+                }
+                else
+                {
+                    cout << "\nError. La opcion elegida ya tiene una nota.";
                 }
                 break;
             case 2:
-                if (estudiantes[i].nota2 == 0){
-                cout << "\nIngrese la segunda nota: ";
-                cin >> estudiantes[i].nota2;                   
-                }else{
-                    cout<<"\nError. La opcion elegida ya tiene una nota.";
+                if (estudiantes[i].nota2 == 0)
+                {
+                    cout << "\nIngrese la segunda nota: ";
+                    cin >> estudiantes[i].nota2;
+                }
+                else
+                {
+                    cout << "\nError. La opcion elegida ya tiene una nota.";
                 }
                 break;
             case 3:
-                if (estudiantes[i].nota3 == 0){
-                cout << "\nIngrese la tercera nota: ";
-                cin >> estudiantes[i].nota3;                  
-                }else{
-                cout<<"\nError. La opcion elegida ya tiene una nota.";
+                if (estudiantes[i].nota3 == 0)
+                {
+                    cout << "\nIngrese la tercera nota: ";
+                    cin >> estudiantes[i].nota3;
+                }
+                else
+                {
+                    cout << "\nError. La opcion elegida ya tiene una nota.";
                 }
                 break;
             case 4:
@@ -203,14 +213,61 @@ void calcularPromedio()
 
     ifstream archivo("estudiantes.txt");
 
-    while (archivo >> estudiantes.identificador >> estudiantes.nombres >> estudiantes.apellidos >> estudiantes.nota1 >> estudiantes.nota2 >> estudiantes.nota3)
+    if (!archivo.is_open())
     {
-        sumaNotas = estudiantes.nota1 + estudiantes.nota2 + estudiantes.nota3;
-        promedioNotas = sumaNotas / 3;
-        cout << estudiantes.nombres << " " << estudiantes.apellidos << " || PROMEDIO: " << promedioNotas << endl;
+        cout << "No se puedo abrir el archivo de estudiantes.txt" << endl;
     }
+    else
+    {
+        while (archivo >> estudiantes.identificador >> estudiantes.nombres >> estudiantes.apellidos >> estudiantes.nota1 >> estudiantes.nota2 >> estudiantes.nota3)
+        {
+            sumaNotas = estudiantes.nota1 + estudiantes.nota2 + estudiantes.nota3;
+            promedioNotas = sumaNotas / 3;
+            cout << estudiantes.nombres << " " << estudiantes.apellidos << " || PROMEDIO: " << promedioNotas << endl;
+        }
 
-    archivo.close();
+        archivo.close();
+    }
+}
+
+/* FUNCION PARA CALCULAR EL PROMEDIO DE LA CLASE */
+
+void promedioClase()
+{
+    Estudiante estudiantes;
+    float promedioNotas = 0;
+    float sumaPromedios = 0;
+    int cantidadEstudiantes = 0;
+    float promedioGeneral = 0;
+
+    ifstream archivo("estudiantes.txt");
+
+    if (!archivo.is_open())
+    {
+        cout << "No se puedo abrir el archivo de estudiantes.txt" << endl;
+    }
+    else
+    {
+        while (archivo >> estudiantes.identificador >> estudiantes.nombres >> estudiantes.apellidos >> estudiantes.nota1 >> estudiantes.nota2 >> estudiantes.nota3)
+        {
+            promedioNotas = (estudiantes.nota1 + estudiantes.nota2 + estudiantes.nota3) / 3;
+            sumaPromedios += promedioNotas;
+            cantidadEstudiantes++;
+        }
+
+        archivo.close();
+
+        if (cantidadEstudiantes == 0)
+        {
+            cout << "No hay estudiantes registrados." << endl;
+        }
+        else
+        {
+            promedioGeneral = sumaPromedios / cantidadEstudiantes;
+            cout << "La cantidad de estudiantes procesados es de: " << cantidadEstudiantes << endl;
+            cout << "El promedio general de la clase es: " << promedioGeneral << endl;
+        }
+    }
 }
 
 /* FUNCIÓN PARA MOSTRAR LA CANTIDAD DE ESTUDIANTES APROBADOS Y REPROBADOS */
@@ -222,18 +279,24 @@ void metricasAprobados()
     int reprobados = 0;
 
     ifstream archivo("estudiantes.txt");
-
-    while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+    if (!archivo.is_open())
     {
-        promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
+        cout << "No se puedo abrir el archivo de estudiantes.txt" << endl;
+    }
+    else
+    {
+        while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+        {
+            promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
 
-        if (promedioNotas >= NOTA_MINIMA)
-        {
-            aprobados++;
-        }
-        else
-        {
-            reprobados++;
+            if (promedioNotas >= NOTA_MINIMA)
+            {
+                aprobados++;
+            }
+            else
+            {
+                reprobados++;
+            }
         }
     }
 
@@ -266,19 +329,26 @@ void promedioMaximo()
 
     ifstream archivo("estudiantes.txt");
 
-    while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+    if (!archivo.is_open())
     {
-        promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
-
-        if (promedioNotas > promedioMaximo)
-        {
-            promedioMaximo = promedioNotas;
-            nombreEstudiante = estudiante.nombres + " " + estudiante.apellidos;
-        }
+        cout << "No se puedo abrir el archivo de estudiantes.txt" << endl;
     }
+    else
+    {
+        while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+        {
+            promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
 
-    archivo.close();
-    cout << "El promedio mas alto es: " << promedioMaximo << " del alumno: " << nombreEstudiante << endl;
+            if (promedioNotas > promedioMaximo)
+            {
+                promedioMaximo = promedioNotas;
+                nombreEstudiante = estudiante.nombres + " " + estudiante.apellidos;
+            }
+        }
+
+        archivo.close();
+        cout << "El promedio mas alto es: " << promedioMaximo << " del alumno: " << nombreEstudiante << endl;
+    }
 }
 
 void promedioMinimo()
@@ -290,19 +360,26 @@ void promedioMinimo()
 
     ifstream archivo("estudiantes.txt");
 
-    while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+    if (!archivo.is_open())
     {
-        promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
-
-        if (promedioNotas < promedioMinimo)
-        {
-            promedioMinimo = promedioNotas;
-            nombreEstudiante = estudiante.nombres + " " + estudiante.apellidos;
-        }
+        cout << "No se puedo abrir el archivo de estudiantes.txt" << endl;
     }
+    else
+    {
+        while (archivo >> estudiante.identificador >> estudiante.nombres >> estudiante.apellidos >> estudiante.nota1 >> estudiante.nota2 >> estudiante.nota3)
+        {
+            promedioNotas = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3;
 
-    archivo.close();
-    cout << "El promedio mas bajo es: " << promedioMinimo <<  " del alumno: " << nombreEstudiante << endl;
+            if (promedioNotas < promedioMinimo)
+            {
+                promedioMinimo = promedioNotas;
+                nombreEstudiante = estudiante.nombres + " " + estudiante.apellidos;
+            }
+        }
+
+        archivo.close();
+        cout << "El promedio mas bajo es: " << promedioMinimo << " del alumno: " << nombreEstudiante << endl;
+    }
 }
 
 /* FUNCIÓN PARA CARGAR LOS ESTUDIANTES GUARDADOS EN EL ARCHIVO AL INICIAR EL PROGRAMA */
@@ -311,62 +388,68 @@ int cargarEstudiantes(Estudiante estudiantes[])
     int cantidad = 0;
     ifstream archivo("estudiantes.txt");
 
-    while (cantidad < 200 && archivo >> estudiantes[cantidad].identificador >> estudiantes[cantidad].nombres >> estudiantes[cantidad].apellidos >> estudiantes[cantidad].nota1 >> estudiantes[cantidad].nota2 >> estudiantes[cantidad].nota3)
+    if (!archivo.is_open())
     {
-        cantidad++;
+        cout << "No se puedo abrir el archivo de estudiantes.txt" << endl;
     }
+    else
+    {
+        while (cantidad < 200 && archivo >> estudiantes[cantidad].identificador >> estudiantes[cantidad].nombres >> estudiantes[cantidad].apellidos >> estudiantes[cantidad].nota1 >> estudiantes[cantidad].nota2 >> estudiantes[cantidad].nota3)
+        {
+            cantidad++;
+        }
 
-    archivo.close();
-    return cantidad;
+        archivo.close();
+        return cantidad;
+    }
 }
 
-void BusquedaCodigo(Estudiante estudiantes[], int cantidadEstudiantes){ // faltan retoques de la busquedacodigo
+void BusquedaCodigo(Estudiante estudiantes[], int cantidadEstudiantes)
+{ // faltan retoques de la busquedacodigo
 
     string BusquedaCod;
     int encont = 0;
 
     // falta un do while a este para que sea mejor.
-    for (int i = 0; i < cantidadEstudiantes; i++){
-    cout<<"\nEstudiante : " << estudiantes[i].nombres <<" " <<estudiantes[i].apellidos<<" || " <<"Codigo: "<<estudiantes[i].identificador <<endl ;
+    for (int i = 0; i < cantidadEstudiantes; i++)
+    {
+        cout << "\nEstudiante : " << estudiantes[i].nombres << " " << estudiantes[i].apellidos << " || " << "Codigo: " << estudiantes[i].identificador << endl;
     }
 
     do
     {
         cout << "\nIngresa el codigo del estudiante que desea solicitar su informacion: " << endl;
         cin >> BusquedaCod;
-        for (int i = 0; i < cantidadEstudiantes; i++){
+        for (int i = 0; i < cantidadEstudiantes; i++)
+        {
 
-        if(estudiantes[i].identificador == BusquedaCod){
-            encont = 1;
-            cout << "\n-----------------------------" << endl;
-            cout << "------Informacion estudiantil------" << endl;
-            cout << "-----------------------------" << endl;
-            cout << "\nEstudiante" << "(" << i + 1 << ")";
-            cout << "\nNombre del estudiante: " << estudiantes[i].nombres;
-            cout << "\nApellidos del estudiante: " << estudiantes[i].apellidos;
-            cout << "\nCodigo del estudiante: " << estudiantes[i].identificador;
-            cout << "\nNota 1 : " << estudiantes[i].nota1;
-            cout << "\nNota 2 : " << estudiantes[i].nota2;
-            cout << "\nNota 3 : " << estudiantes[i].nota3;
-            cout << "\nPromedio: " << estudiantes[i].promedio;
-            break;
+            if (estudiantes[i].identificador == BusquedaCod)
+            {
+                encont = 1;
+                cout << "\n-----------------------------" << endl;
+                cout << "------Informacion estudiantil------" << endl;
+                cout << "-----------------------------" << endl;
+                cout << "\nEstudiante" << "(" << i + 1 << ")";
+                cout << "\nNombre del estudiante: " << estudiantes[i].nombres;
+                cout << "\nApellidos del estudiante: " << estudiantes[i].apellidos;
+                cout << "\nCodigo del estudiante: " << estudiantes[i].identificador;
+                cout << "\nNota 1 : " << estudiantes[i].nota1;
+                cout << "\nNota 2 : " << estudiantes[i].nota2;
+                cout << "\nNota 3 : " << estudiantes[i].nota3;
+                cout << "\nPromedio: " << estudiantes[i].promedio;
+                break;
             }
         }
 
         if (encont != 1)
         {
-            cout << "\nEl codigo: " << BusquedaCod<<" No existe, intenta con un codigo existente"<<endl;
+            cout << "\nEl codigo: " << BusquedaCod << " No existe, intenta con un codigo existente" << endl;
         }
         cout << "\n----------------------------------------------------------------------------------" << endl;
-        cout<<"\nSi desea volver a intentarlo presione (0), si desea volver al menu presione 1"<<endl;
-        cin>>encont;
+        cout << "\nSi desea volver a intentarlo presione (0), si desea volver al menu presione 1" << endl;
+        cin >> encont;
 
     } while (encont != 1);
-    
-
-    
-    
-    
 }
 
 int main()
@@ -379,9 +462,9 @@ int main()
     do
     {
 
-        cargarEstudiantes(estudiantes);// chicos esto lo agregue por que es imposible que el programa pueda leer el archivo sin llamar a la funcion,
-        //aqui la llama en cada iteracion del do while ya que es cuando se agrega un estudiante y etc, y al terminar de agregarlo lo vuelve a leer de manera rapida
-        //asi que esto esta arreglado.
+        cargarEstudiantes(estudiantes); // chicos esto lo agregue por que es imposible que el programa pueda leer el archivo sin llamar a la funcion,
+        // aqui la llama en cada iteracion del do while ya que es cuando se agrega un estudiante y etc, y al terminar de agregarlo lo vuelve a leer de manera rapida
+        // asi que esto esta arreglado.
 
         mostrarMenu();
         cin >> opcion;
@@ -407,7 +490,7 @@ int main()
             break;
 
         case 5:
-            cout << "Trabajando en ello..." << endl;
+            promedioClase();
             break;
 
         case 6:
